@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>minidrag examples</title>
+  <style>
+    body {
+      width: 600px;
+      margin: 40px auto;
+    }
+    .drag-free-container {
+      margin: 40px 0;
+      height: 40px;
+    }
+    .drag-container {
+      position: relative;
+      height: 40px;
+      background: #DDD;
+      margin: 40px 0;
+    }
+    .drag-xy {
+      height: 200px;
+    }
+    .drag-y {
+      width: 40px;
+      height: 200px;
+    }
+    .handle {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      font-size: 20px;
+      color: white;
+      font-family: sans-serif;
+      background: green;
+      cursor: pointer;
+    }
+    .handle-2 {
+      background: #003300;
+    }
+    .handle-x,
+    .handle-y,
+    .handle-xy {
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+<div class="drag-free-container">
+  <div class="handle handle-xy">xy</div>
+  <div class="handle handle-y">y</div>
+  <div class="handle handle-x">x</div>
+</div>
+
+<div class="drag-container drag-xy">
+  <div class="handle">xy</div>
+</div>
+
+<div class="drag-container drag-x">
+  <div class="handle">x</div>
+</div>
+
+<div class="drag-container drag-y">
+  <div class="handle">y</div>
+</div>
+
+<div class="drag-container drag-double">
+  <div class="handle handle-1">x</div>
+  <div class="handle handle-2">x</div>
+</div>
+
+<script src="./bundle.js"></script>
+</body>
+</html>

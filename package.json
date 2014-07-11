@@ -1,0 +1,34 @@
+{
+  "name": "minidrag",
+  "description": "A simple solution to make an HTML element draggable",
+  "version": "0.0.0",
+  "author": "Pierre Bertet <bonjour@pierrebertet.net> (http://pierrebertet.net/)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bpierre/minidrag.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "browserify test/index.js | testling"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^4.2.0",
+    "faucet": "0.0.1",
+    "tape": "^2.13.3",
+    "testling": "^1.7.0"
+  },
+  "testling": {
+    "files": "test/index.js",
+    "browsers": [
+      "firefox/latest",
+      "firefox/nightly",
+      "chrome/latest",
+      "chrome/canary",
+      "ie/9..latest",
+      "opera/latest",
+      "safari/6..latest"
+    ]
+  }
+}
