@@ -1,5 +1,8 @@
 # minidrag [![Build Status](https://travis-ci.org/bpierre/minidrag.png?branch=master)](https://travis-ci.org/bpierre/minidrag)
 
+<p align="center"><img width="255" height="153" alt="minidrag illustration" src="http://scri.ch/nd1.png"></p>
+
+
 ## Usage
 
 ```js
@@ -123,3 +126,7 @@ IE9+ and modern browsers.
 ## License
 
 [MIT](http://pierre.mit-license.org/)
+
+## Special thanks
+
+Illustration made by [Raphaël Bastide](http://raphaelbastide.com/) with [scri.ch](http://scri.ch/).
