@@ -29,6 +29,13 @@ function getTotalScroll(elt) {
   return scroll;
 }
 
+function eventToPosition(event) {
+  if (event.touches && event.touches.length) {
+    return { x: event.touches[0].clientX, y: event.touches[0].clientY };
+  }
+  return { x: event.clientX, y: event.clientY };
+}
+
 var raf = global.requestAnimationFrame || function(cb) {
   setTimeout(cb, 40);
 };
@@ -94,7 +101,7 @@ function start(mousevent, elt, limits, getLocalPosition, settings) {
   var scroll = getTotalScroll(elt);
 
   var getPosition = function(event) {
-    var coords = { x: event.clientX, y: event.clientY };
+    var coords = eventToPosition(event);
     var pos = getLocalPosition(coords, dimensions);
 
     // add total scroll
@@ -111,14 +118,20 @@ function start(mousevent, elt, limits, getLocalPosition, settings) {
 
   var stop = function(event) {
     global.removeEventListener('mousemove', moveEvent);
+    global.removeEventListener('touchmove', moveEvent);
     global.removeEventListener('mouseup', stop);
+    global.removeEventListener('touchend', stop);
     settings.drop(getPosition(event), elt);
   };
 
-  moveEvent(mousevent);
+  // On touch devices, wait for an actual move event before moving
+  // the dragged element.
+  if (!mousevent.touches) moveEvent(mousevent);
 
   global.addEventListener('mousemove', moveEvent);
+  global.addEventListener('touchmove', moveEvent);
   global.addEventListener('mouseup', stop);
+  global.addEventListener('touchend', stop);
 }
 
 module.exports = function drag(elt, settings) {
@@ -137,8 +150,11 @@ module.exports = function drag(elt, settings) {
   var limits = getLimits(settings.constraint);
   var getLocalPosition = initLocalPosition(elt, limits);
 
-  elt.addEventListener('mousedown', function(e) {
+  var downEvent = function(e) {
     e.preventDefault();
     start(e, elt, limits, getLocalPosition, settings);
-  });
+  };
+
+  elt.addEventListener('mousedown', downEvent);
+  elt.addEventListener('touchstart', downEvent);
 };
