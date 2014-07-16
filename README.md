@@ -114,10 +114,6 @@ A function that will be called when the Element is dropped.
 
 Parameters: `position` (`{ top: Number, left: Number }`), `element` (the dragged Element).
 
-## TODO
-
-Touch support
-
 ## Browser compatibility
 
 IE9+ and modern browsers.
