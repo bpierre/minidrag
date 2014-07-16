@@ -1,7 +1,8 @@
 # minidrag [![Build Status](https://travis-ci.org/bpierre/minidrag.png?branch=master)](https://travis-ci.org/bpierre/minidrag)
 
-<p align="center"><img width="255" height="153" alt="minidrag illustration" src="http://scri.ch/nd1.png"></p>
+A simple solution to make an HTML element draggable. There is no dependencies.
 
+<p align="center"><img width="255" height="153" alt="minidrag illustration" src="http://scri.ch/nd1.png"></p>
 
 ## Usage
 
