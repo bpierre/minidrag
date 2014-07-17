@@ -9,6 +9,10 @@ if (typeof window === 'undefined') {
 var DEBUG = false;
 
 function prepare() {
+  tutils.mkElt('meta', {}, {
+    name: 'viewport',
+    content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+  }, document.querySelector('head'));
 
   var container = tutils.mkElt('div', {}, {}, document.body);
   tutils.style(container, {
@@ -54,14 +58,17 @@ function prepare() {
 }
 
 function dragTo(elt, x1, y1, x2, y2) {
-  tutils.triggerMouseEvent(elt, 'mousedown', x1, y1);
-  tutils.triggerMouseEvent(elt, 'mousemove', x2, y2);
-  tutils.triggerMouseEvent(elt, 'mouseup', x2, y2);
+  var touch = 'ontouchstart' in window;
+  var up = touch? 'touchend' : 'mouseup';
+  var down = touch? 'touchstart' : 'mousedown';
+  var move = touch? 'touchmove' : 'mousemove';
+  tutils.triggerMouseEvent(elt, down, x1, y1);
+  tutils.triggerMouseEvent(elt, move, x2, y2);
+  tutils.triggerMouseEvent(elt, up, x2, y2);
 }
 
 function scroll(x, y, cb) {
-  document.body.scrollLeft = document.documentElement.scrollLeft = x;
-  document.body.scrollTop = document.documentElement.scrollTop = y;
+  window.scrollTo(x, y);
   setTimeout(cb, 100);
 }
 

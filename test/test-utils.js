@@ -3,7 +3,7 @@ function mkElt(name, props, attrs, container) {
   if (!props) props = {};
   if (!attrs) attrs = {};
   for (var i in props) elt[i] = props[i];
-  for (var j in attrs) elt.setAttribute(i, attrs[i]);
+  for (var j in attrs) elt.setAttribute(j, attrs[j]);
   if (container) container.appendChild(elt);
   return elt;
 }
