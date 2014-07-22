@@ -1,5 +1,11 @@
 var dragElt = require('../');
 
+(function() {
+  var container = document.querySelector('.positioned .container');
+  var handle = container.querySelector('.handle');
+  dragElt(handle, { constraint: container });
+}());
+
 ['xy', 'x', 'y'].forEach(function(name) {
   var container = document.querySelector('.drag-' + name);
   var handle = container.querySelector('.handle');

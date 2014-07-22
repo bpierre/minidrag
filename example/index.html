@@ -5,8 +5,22 @@
   <title>minidrag examples</title>
   <style>
     body {
+      margin: 0;
+    }
+    main {
       width: 600px;
       margin: 40px auto;
+    }
+    .positioned {
+      position: relative;
+      margin: 40px 0;
+      height: 200px;
+      background: tomato;
+    }
+    .positioned .container {
+      margin: 40px 0;
+      height: 100px;
+      background: grey;
     }
     .drag-free-container {
       margin: 40px 0;
@@ -49,6 +63,14 @@
 </head>
 <body>
 
+<main>
+
+<div class="positioned">
+  <div class="container">
+    <div class="handle">xy</div>
+  </div>
+</div>
+
 <div class="drag-free-container">
   <div class="handle handle-xy">xy</div>
   <div class="handle handle-y">y</div>
@@ -71,6 +93,8 @@
   <div class="handle handle-1">x</div>
   <div class="handle handle-2">x</div>
 </div>
+
+</main>
 
 <script src="./bundle.js"></script>
 </body>

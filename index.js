@@ -20,25 +20,28 @@ function isElement(obj) {
   return obj && obj.nodeType === 1;
 }
 
-function getTotalScroll(elt) {
-  var scroll = { left: 0, top: 0 };
-  while (elt = elt.parentElement) {
-    scroll.left += elt.scrollLeft;
-    scroll.top += elt.scrollTop;
+function getEltScroll(elt) {
+  var scroll = { top: elt.scrollTop, left: elt.scrollLeft };
+  if (elt === document.body && !scroll.top && !scroll.left) {
+    scroll.top = document.documentElement.scrollTop;
+    scroll.left = elt.scrollLeft || document.documentElement.scrollLeft;
   }
   return scroll;
 }
 
 function eventToPosition(event) {
-  if (event.touches && event.touches.length) {
-    return { x: event.touches[0].clientX, y: event.touches[0].clientY };
-  }
+  if (event.touches && event.touches.length) event = event.touches[0];
   return { x: event.clientX, y: event.clientY };
 }
 
 var raf = global.requestAnimationFrame || function(cb) {
   setTimeout(cb, 40);
 };
+
+function getOffsetParent(elt) {
+  var offsetParent = elt.offsetParent || document.body;
+  return offsetParent;
+}
 
 function initLocalPosition(elt, limits) {
 
@@ -47,13 +50,12 @@ function initLocalPosition(elt, limits) {
     var left = elt.offsetLeft;
     var top = elt.offsetTop;
 
-    var offsetParent = elt.offsetParent;
-    var parentLeft = offsetParent.offsetLeft;
-    var parentTop = offsetParent.offsetTop;
-
+    var parent = getOffsetParent(elt);
+    var parentRect = { left: 0, top: 0 };
+    if (parent !== document.body) parentRect = parent.getBoundingClientRect();
     var pos = {
-      left: coords.x - parentLeft - dimensions.width/2,
-      top: coords.y - parentTop - dimensions.height/2
+      left: coords.x - parentRect.left - dimensions.width/2,
+      top: coords.y - parentRect.top - dimensions.height/2
     };
 
     // constraint: 'x' or 'y'
@@ -67,12 +69,17 @@ function initLocalPosition(elt, limits) {
         pos.left = limits.x - dimensions.width;
       }
     }
+
     if (isNumber(limits.y)) {
       if (pos.top < 0) pos.top = 0;
       if (pos.top > limits.y - dimensions.height) {
         pos.top = limits.y - dimensions.height;
       }
     }
+
+    var scroll = getEltScroll(parent);
+    pos.top += scroll.top;
+    pos.left += scroll.left;
 
     return pos;
   }
@@ -98,16 +105,10 @@ function move(elt, limits, position, onmove) {
 function start(mousevent, elt, limits, getLocalPosition, settings) {
 
   var dimensions = { width: elt.offsetWidth, height: elt.offsetHeight };
-  var scroll = getTotalScroll(elt);
 
   var getPosition = function(event) {
     var coords = eventToPosition(event);
     var pos = getLocalPosition(coords, dimensions);
-
-    // add total scroll
-    pos.left += scroll.left;
-    pos.top += scroll.top;
-
     return settings.constraintFn(pos) || pos;
   };
 
