@@ -148,10 +148,9 @@ module.exports = function drag(elt, settings) {
     drop: function() {}
   });
 
-  var limits = getLimits(settings.constraint);
-  var getLocalPosition = initLocalPosition(elt, limits);
-
   var downEvent = function(e) {
+    var limits = getLimits(settings.constraint);
+    var getLocalPosition = initLocalPosition(elt, limits);
     e.preventDefault();
     start(e, elt, limits, getLocalPosition, settings);
   };
