@@ -109,7 +109,6 @@ function move(elt, limits, position, onmove) {
 }
 
 function start(mouseEvent, elt, limits, getLocalPosition, settings) {
-
   var dimensions = { width: elt.offsetWidth, height: elt.offsetHeight };
 
   var getPosition = function(event) {
@@ -155,10 +154,9 @@ module.exports = function drag(elt, settings) {
   });
 
   var downEvent = function(e) {
-    var limits = getLimits(settings.constraint);
-    var mousepos = { x: e.clientX, y: e.clientY };
-    var getLocalPosition = initLocalPosition(elt, limits, mousepos);
     e.preventDefault();
+    var limits = getLimits(settings.constraint);
+    var getLocalPosition = initLocalPosition(elt, limits, eventToPosition(e));
     start(e, elt, limits, getLocalPosition, settings);
   };
 
