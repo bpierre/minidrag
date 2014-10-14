@@ -43,7 +43,13 @@ function getOffsetParent(elt) {
   return offsetParent;
 }
 
-function initLocalPosition(elt, limits) {
+function initLocalPosition(elt, limits, mousepos) {
+
+  var initialRect = elt.getBoundingClientRect();
+  var shift = {
+    y: mousepos.y - initialRect.top - initialRect.height,
+    x: mousepos.x - initialRect.left - initialRect.width
+  };
 
   return function getLocalPosition(coords, dimensions) {
 
@@ -54,8 +60,8 @@ function initLocalPosition(elt, limits) {
     var parentRect = { left: 0, top: 0 };
     if (parent !== document.body) parentRect = parent.getBoundingClientRect();
     var pos = {
-      left: coords.x - parentRect.left - dimensions.width/2,
-      top: coords.y - parentRect.top - dimensions.height/2
+      left: coords.x - parentRect.left - dimensions.width - shift.x,
+      top: coords.y - parentRect.top - dimensions.height - shift.y
     };
 
     // constraint: 'x' or 'y'
@@ -102,7 +108,7 @@ function move(elt, limits, position, onmove) {
   onmove(position, elt);
 }
 
-function start(mousevent, elt, limits, getLocalPosition, settings) {
+function start(mouseEvent, elt, limits, getLocalPosition, settings) {
 
   var dimensions = { width: elt.offsetWidth, height: elt.offsetHeight };
 
@@ -127,7 +133,7 @@ function start(mousevent, elt, limits, getLocalPosition, settings) {
 
   // On touch devices, wait for an actual move event before moving
   // the dragged element.
-  if (!mousevent.touches) moveEvent(mousevent);
+  if (!mouseEvent.touches) moveEvent(mouseEvent);
 
   global.addEventListener('mousemove', moveEvent);
   global.addEventListener('touchmove', moveEvent);
@@ -150,7 +156,8 @@ module.exports = function drag(elt, settings) {
 
   var downEvent = function(e) {
     var limits = getLimits(settings.constraint);
-    var getLocalPosition = initLocalPosition(elt, limits);
+    var mousepos = { x: e.clientX, y: e.clientY };
+    var getLocalPosition = initLocalPosition(elt, limits, mousepos);
     e.preventDefault();
     start(e, elt, limits, getLocalPosition, settings);
   };
