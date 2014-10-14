@@ -104,8 +104,8 @@ function move(elt, limits, position, onmove) {
   raf(function() {
     if (limits.x !== true) elt.style.left = position.left + 'px';
     if (limits.y !== true) elt.style.top = position.top + 'px';
+    onmove(position, elt);
   });
-  onmove(position, elt);
 }
 
 function start(mouseEvent, elt, limits, getLocalPosition, settings) {
