@@ -1,6 +1,8 @@
 BROWSERIFY=./node_modules/.bin/browserify
 TESTLING=./node_modules/.bin/testling
 
+all: example
+
 test:
 	npm test | faucet
 
