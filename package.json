@@ -1,7 +1,7 @@
 {
   "name": "minidrag",
   "description": "A simple solution to make an HTML element draggable",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Pierre Bertet <bonjour@pierrebertet.net> (http://pierrebertet.net/)",
   "license": "MIT",
   "repository": {
