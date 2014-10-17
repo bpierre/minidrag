@@ -174,6 +174,14 @@ module.exports = function drag(elt, settings) {
     start(e, elt, limits, getLocalPosition, settings);
   };
 
+  // Prevent text selection
+  elt.addEventListener('selectstart', function(e) {
+    e.preventDefault();
+  });
+
+  // Prevent default OS behaviors
+  elt.style.touchAction = elt.style.msTouchAction = 'none';
+
   elt.addEventListener('mousedown', downEvent);
   elt.addEventListener(touchEvents().touchstart, downEvent);
 };
