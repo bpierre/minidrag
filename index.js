@@ -124,35 +124,21 @@ function start(mouseEvent, elt, limits, getLocalPosition, settings) {
 
   var stop = function(event) {
     global.removeEventListener('mousemove', moveEvent);
-    global.removeEventListener(touchEvents().touchmove, moveEvent);
+    global.removeEventListener('touchmove', moveEvent);
     global.removeEventListener('mouseup', stop);
-    global.removeEventListener(touchEvents().touchend, stop);
+    global.removeEventListener('touchend', stop);
     settings.drop(getPosition(event), elt);
   };
 
-  // On touch devices, wait for an actual move event
-  // before moving the dragged element.
+  // On touch devices, wait for an actual move event before moving
+  // the dragged element.
   if (!mouseEvent.touches) moveEvent(mouseEvent);
 
   global.addEventListener('mousemove', moveEvent);
-  global.addEventListener(touchEvents().touchmove, moveEvent);
+  global.addEventListener('touchmove', moveEvent);
   global.addEventListener('mouseup', stop);
-  global.addEventListener(touchEvents().touchend, stop);
+  global.addEventListener('touchend', stop);
 }
-
-var touchEvents = (function() {
-  var events = null;
-  return function() {
-    if (events) return events;
-    var touch = !navigator.msPointerEnabled;
-    events = {
-      touchstart: touch? 'touchstart' : 'MSPointerDown',
-      touchmove:  touch? 'touchmove'  : 'MSPointerMove',
-      touchend:   touch? 'touchend'   : 'MSPointerMove'
-    };
-    return events;
-  };
-}());
 
 module.exports = function drag(elt, settings) {
 
@@ -183,5 +169,5 @@ module.exports = function drag(elt, settings) {
   elt.style.touchAction = elt.style.msTouchAction = 'none';
 
   elt.addEventListener('mousedown', downEvent);
-  elt.addEventListener(touchEvents().touchstart, downEvent);
+  elt.addEventListener('touchstart', downEvent);
 };
