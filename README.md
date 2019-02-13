@@ -2,7 +2,7 @@
 
 A simple solution to make an HTML element draggable. There is no dependencies.
 
-<p align="center"><img width="255" height="153" alt="minidrag illustration" src="http://scri.ch/nd1.png"></p>
+<p align="center"><img width="255" height="153" alt="minidrag illustration" src="https://scri.ch/nd1-2x.png"></p>
 
 ## Usage
 
